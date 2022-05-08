@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Run4YourLife</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="personal_data">Personal Data</string>
+    <string name="birth_header">Birth Data</string>
+
+    <!-- Personal Data Preferences -->
+    <string name="personal_name">Name</string>
+    <string name="sex_selector">Sex</string>
+    <string name="bodyweight">Body Weight</string>
+
+    <!-- Birth Data Preferences -->
+    <string name="birth_year">Year</string>
+    <string name="birth_month">Month</string>
+    <string name="birth_day">Day</string>
+</resources>

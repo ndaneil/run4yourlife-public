@@ -1,0 +1,70 @@
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        app:title="API key">
+
+        <EditTextPreference
+            app:key="KEY"
+            app:title="API key"
+            app:summary="Enter OpenWeatherMap API key here"
+            app:useSimpleSummaryProvider="true"/>
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/personal_data">
+
+        <EditTextPreference
+            app:key="name"
+            app:title="@string/personal_name"
+            app:summary="Write your name here"
+            app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
+            app:key="sex"
+            app:title="@string/sex_selector"
+            app:entries="@array/sex_entries"
+            app:entryValues="@array/sex_values"
+            app:summary="Select your sex"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="weight"
+            app:title="@string/bodyweight"
+            app:summary="Enter your body weight here"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/birth_header">
+
+        <ListPreference
+            app:key="year"
+            app:title="@string/birth_year"
+            app:entries="@array/year_entries"
+            app:entryValues="@array/year_values"
+            app:summary="Select your year of birth"
+            app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
+            app:key="month"
+            app:title="@string/birth_month"
+            app:entries="@array/month_entries"
+            app:entryValues="@array/month_values"
+            app:summary="Month"
+            app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
+            app:key="day"
+            app:title="@string/birth_day"
+            app:entries="@array/day_entries"
+            app:entryValues="@array/day_values"
+            app:summary="Day"
+            app:useSimpleSummaryProvider="true"/>
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
