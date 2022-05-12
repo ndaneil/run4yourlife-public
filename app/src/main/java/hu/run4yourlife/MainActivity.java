@@ -225,7 +225,6 @@ public class MainActivity extends AppCompatActivity{
     }
     private void drawGraph(ArrayList<Integer> s){
         chart = findViewById(R.id.weeklyChart);
-        chart.setBackgroundColor(Color.WHITE);
         chart.setExtraTopOffset(-30f);
         chart.setExtraBottomOffset(10f);
         chart.setExtraLeftOffset(70f);
@@ -316,8 +315,8 @@ public class MainActivity extends AppCompatActivity{
         ArrayList<BarEntry> values = new ArrayList<>();
         ArrayList<Integer> colors = new ArrayList<>();
 
-        int green = Color.rgb(110, 190, 102);
-        int red = Color.rgb(211, 74, 88);
+        int green = getColor(R.color.primaryColor);
+        int red =getColor(R.color.red);
 
         for (int i = 0; i < dataList.size(); i++) {
 

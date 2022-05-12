@@ -2,6 +2,7 @@ package hu.run4yourlife;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -131,211 +132,115 @@ public class RunTrackerActivity extends AppCompatActivity implements RunningServ
     }
 
     private void createGraph(){
-    try {
-        Challenge ch = new Challenges(this).getChallengeDetailsForID(challengedID);
-        ArrayList<BarEntry> values = new ArrayList<>();
-        ArrayList<Integer> colors = new ArrayList<>();
-        ArrayList<String> labels = new ArrayList<>();
-
-        BarDataSet set;
-
-        if (chart.getData() != null &&
-                chart.getData().getDataSetCount() > 0) {
-            set = (BarDataSet) chart.getData().getDataSetByIndex(0);
-            //TODO UPDATE data
-            values.clear();
-            double runningtotal = distanceCurrent;
-            String nexstoplabel = runningtotal >0 ? null: ch.getStops().get(0);
-            for (int i = 0; i < ch.getStops().size();i++){
-                double dis = ch.getDistances().get(i);
-                double val = 0f;
-                if (runningtotal > dis){
-                    runningtotal -= dis;
-                    val = 1;
-                }else{
-                    if(runningtotal>0){
-                        if(i+1 >= ch.getStops().size()){
-                            nexstoplabel="Végállomás";
-                        }else {
-                            nexstoplabel = ch.getStops().get(i + 1);
-                        }
-                    }
-                    if(dis==0){
-                        val=0;
-                    }else{
-                        val = runningtotal/dis;
-                    }
-                    runningtotal = 0;
-                }
-                values.add(new BarEntry(i,(float)val));
-            }
-            if(nexstoplabel==null){
-                nextStopName.setText("Végállomás");
-            }else {
-                nextStopName.setText(nexstoplabel);
-            }
-
-            set.setValues(values);
-
-            chart.getData().notifyDataChanged();
-            chart.notifyDataSetChanged();
-
-        } else {
-            int color = Color.rgb(255, 127, 0);
-            for (int i = 0; i < ch.getStops().size(); i++) {
-                BarEntry entry = new BarEntry(i, 0);
-                values.add(entry);
-                colors.add(color);
-                labels.add(ch.getStops().get(i));
-            }
-            set = new BarDataSet(values, "Values");
-            set.setColors(colors);
-            set.setValueTextColors(colors);
-
-            BarData data = new BarData(set);
-            data.setDrawValues(false);
-
-
-            //data.setBarWidth(0.8f);
-
-            XAxis xAxis = chart.getXAxis();
-            xAxis.setGranularity(1f);
-            xAxis.setLabelCount(24);
-            xAxis.setAvoidFirstLastClipping(false);
-            xAxis.setValueFormatter(new IndexAxisValueFormatter(labels) {
-            });
-            xAxis.setTextColor(Color.WHITE);
-            xAxis.setLabelRotationAngle(90);
-            xAxis.setDrawGridLines(false);
-            xAxis.setDrawAxisLine(false);
-
-            xAxis.setDrawLabels(true);
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            YAxis leftAxis = chart.getAxisLeft();
-            leftAxis.setAxisMaximum(1.0f);
-            leftAxis.setAxisMinimum(0.0f);
-            leftAxis.setDrawAxisLine(false);
-            leftAxis.setDrawGridLines(false);
-
-
-
-            chart.getAxisRight().setEnabled(false);
-            chart.setDrawGridBackground(false);
-
-            chart.zoom(2,1,0,0);
-            chart.setDrawBarShadow(false);
-            chart.setDrawValueAboveBar(false);
-            chart.getDescription().setEnabled(false);
-            chart.setScaleEnabled(false);
-            chart.setPinchZoom(false);
-            chart.setDrawGridBackground(false);
-            chart.getAxisLeft().setDrawLabels(false);
-            chart.getAxisRight().setDrawLabels(false);
-            chart.setScaleEnabled(false);
-            chart.getDescription().setEnabled(false);
-            chart.getLegend().setEnabled(false);
-            chart.setData(data);
-            chart.invalidate();
-
-        }
-    }catch (Exception e){
-        e.printStackTrace();
-    }
-        // THIS IS THE ORIGINAL DATA YOU WANT TO PLOT
-
-
-
-
-
-        /*
         try {
             Challenge ch = new Challenges(this).getChallengeDetailsForID(challengedID);
-            xAxis.setLabelCount(ch.getStops().size());
-            double runningtotal = distanceCurrent;
-            String nexstoplabel = ch.getStops().get(0);
-            ArrayList<String> labels = new ArrayList<>();
-
-//            for (int i = 0; i < ch.getStops().size();i++){
-//                double dis = ch.getDistances().get(i)/1000;//TODO remove divide
-//                double val = 0f;
-//                if (runningtotal > dis){
-//                    runningtotal -= dis;
-//                    val = 1;
-//                }else{
-//                    val = runningtotal/dis;
-//                    runningtotal = 0;
-//                    nexstoplabel = ch.getStops().get(0);
-//                }
-//                data.add(new Data(i,(float)val,"-"));
-//
-//            }
-            xAxis.setLabelRotationAngle(90f);
-            xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-            nextStopName.setText("Next stop: "+ nexstoplabel);
             ArrayList<BarEntry> values = new ArrayList<>();
             ArrayList<Integer> colors = new ArrayList<>();
-            int color = Color.rgb(255, 127, 0);
-            for (int i = 0; i < ch.getStops().size(); i++) {
-                BarEntry entry = new BarEntry(i,0 );
-                values.add(entry);
-                colors.add(color);
-                labels.add(ch.getStops().get(i));
+            ArrayList<String> labels = new ArrayList<>();
+
+            BarDataSet set;
+
+            if (chart.getData() != null &&
+                    chart.getData().getDataSetCount() > 0) {
+                set = (BarDataSet) chart.getData().getDataSetByIndex(0);
+                //TODO UPDATE data
+                values.clear();
+                double runningtotal = distanceCurrent;
+                String nexstoplabel = runningtotal >0 ? null: ch.getStops().get(0);
+                for (int i = 0; i < ch.getStops().size();i++){
+                    double dis = ch.getDistances().get(i);
+                    double val = 0f;
+                    if (runningtotal > dis){
+                        runningtotal -= dis;
+                        val = 1;
+                    }else{
+                        if(runningtotal>0){
+                            if(i+1 >= ch.getStops().size()){
+                                nexstoplabel="Végállomás";
+                            }else {
+                                nexstoplabel = ch.getStops().get(i + 1);
+                            }
+                        }
+                        if(dis==0){
+                            val=0;
+                        }else{
+                            val = runningtotal/dis;
+                        }
+                        runningtotal = 0;
+                    }
+                    values.add(new BarEntry(i,(float)val));
+                }
+                if(nexstoplabel==null){
+                    nextStopName.setText("Végállomás");
+                }else {
+                    nextStopName.setText(nexstoplabel);
+                }
+
+                set.setValues(values);
+
+                chart.getData().notifyDataChanged();
+                chart.notifyDataSetChanged();
+
+            } else {
+                int color = Color.rgb(255, 127, 0);
+                for (int i = 0; i < ch.getStops().size(); i++) {
+                    BarEntry entry = new BarEntry(i, 0);
+                    values.add(entry);
+                    colors.add(color);
+                    labels.add(ch.getStops().get(i));
+                }
+                set = new BarDataSet(values, "Values");
+                set.setColors(colors);
+                set.setValueTextColors(colors);
+
+                BarData data = new BarData(set);
+                data.setDrawValues(false);
+
+
+                //data.setBarWidth(0.8f);
+
+                XAxis xAxis = chart.getXAxis();
+                xAxis.setGranularity(1f);
+                xAxis.setLabelCount(24);
+                xAxis.setAvoidFirstLastClipping(false);
+                xAxis.setValueFormatter(new IndexAxisValueFormatter(labels) {
+                });
+                xAxis.setLabelRotationAngle(90);
+                xAxis.setDrawGridLines(false);
+                xAxis.setDrawAxisLine(false);
+
+                xAxis.setDrawLabels(true);
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                YAxis leftAxis = chart.getAxisLeft();
+                leftAxis.setAxisMaximum(1.0f);
+                leftAxis.setAxisMinimum(0.0f);
+                leftAxis.setDrawAxisLine(false);
+                leftAxis.setDrawGridLines(false);
+                xAxis.setTextColor(ContextCompat.getColor(this,R.color.secondaryDarkColor));
+
+
+                chart.getAxisRight().setEnabled(false);
+                chart.setDrawGridBackground(false);
+
+                chart.zoom(2,1,0,0);
+                chart.setDrawBarShadow(false);
+                chart.setDrawValueAboveBar(false);
+                chart.getDescription().setEnabled(false);
+                chart.setScaleEnabled(false);
+                chart.setPinchZoom(false);
+                chart.setDrawGridBackground(false);
+                chart.getAxisLeft().setDrawLabels(false);
+                chart.getAxisRight().setDrawLabels(false);
+                chart.setScaleEnabled(false);
+                chart.getDescription().setEnabled(false);
+                chart.getLegend().setEnabled(false);
+                chart.setData(data);
+                chart.invalidate();
+
             }
-            BarDataSet set = new BarDataSet(values, "Values");
-            set.setColors(colors);
-            set.setValues(values);
-            set.setValueTextColors(colors);
-            chart.setDrawValueAboveBar(true);
-
-            BarData bdata = new BarData(set);
-            bdata.setDrawValues(false);
-            bdata.setBarWidth(0.95f);
-            bdata.setHighlightEnabled(false);
-
-            chart.setData(bdata);
-            chart.invalidate();
-        } catch (IOException e) {
+        }catch (Exception e){
             e.printStackTrace();
-        }*/
-/*
-chart.setBackgroundColor(Color.TRANSPARENT);
-            chart.setExtraTopOffset(10f);
-            chart.setExtraBottomOffset(10f);
-            chart.setExtraLeftOffset(10f);
-            chart.setExtraRightOffset(10f);
-            chart.zoom(2, 1, 0, 0);
-            chart.setDrawBarShadow(false);
-            chart.setDrawValueAboveBar(false);
-            chart.getDescription().setEnabled(false);
-            // scaling can now only be done on x- and y-axis separately
-            chart.setScaleEnabled(false);
-            chart.setPinchZoom(false);
-            chart.setDrawGridBackground(false);
-            XAxis xAxis = chart.getXAxis();
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-            xAxis.setDrawGridLines(false);
-            xAxis.setDrawAxisLine(false);
-            xAxis.setDrawLabels(false);
-            xAxis.setTextColor(Color.LTGRAY);
-            xAxis.setTextSize(13f);
-
-            xAxis.setCenterAxisLabels(true);
-            xAxis.setDrawLabels(true);
-            xAxis.setGranularity(1f);
-            YAxis left = chart.getAxisLeft();
-            left.setDrawLabels(false);
-            left.setSpaceTop(25f);
-            left.setSpaceBottom(25f);
-            left.setDrawAxisLine(false);
-            left.setDrawGridLines(false);
-            left.setDrawZeroLine(true); // draw a zero line
-            left.setAxisMaximum(1.0f);
-            left.setAxisMinimum(0.0f);
-            left.setZeroLineColor(Color.GRAY);
-            left.setZeroLineWidth(1.0f);
-            chart.getAxisRight().setEnabled(false);
-            chart.getLegend().setEnabled(false);*/
+        }
 
     }
 

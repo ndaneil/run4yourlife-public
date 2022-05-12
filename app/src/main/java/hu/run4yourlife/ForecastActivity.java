@@ -1,8 +1,10 @@
 package hu.run4yourlife;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +34,9 @@ import hu.run4yourlife.interfaces.QualityData;
 import hu.run4yourlife.interfaces.RecommendedTime;
 import hu.run4yourlife.interfaces.StaticStuff;
 
+/***
+ * 100% L
+ */
 public class ForecastActivity extends AppCompatActivity implements OnChartValueSelectedListener {
 
     ImageView weatherImage;
@@ -137,9 +142,9 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
 
 
 
-        int green = Color.rgb(110, 190, 102);
-        int yellow = Color.rgb(240,220,0);
-        int red = Color.rgb(211, 74, 88);
+        int green = getColor(R.color.primaryColor);
+        int yellow = getColor(R.color.orange);
+        int red = getColor(R.color.red);
 
         for (int i = 0; i < dataList.size(); i++) {
 
@@ -183,7 +188,9 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
             xAxis.setAvoidFirstLastClipping(false);
             xAxis.setValueFormatter(new IndexAxisValueFormatter(xValues) {
             });
-            xAxis.setTextColor(Color.WHITE);
+            xAxis.setTextColor(ContextCompat.getColor(this,R.color.secondaryDarkColor));
+
+
             forecastBarchart.zoom(2,1,0,0);
             forecastBarchart.getAxisLeft().setDrawLabels(false);
             forecastBarchart.getAxisRight().setDrawLabels(false);
@@ -191,6 +198,7 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
             forecastBarchart.getDescription().setEnabled(false);
             forecastBarchart.getLegend().setEnabled(false);
             forecastBarchart.setOnChartValueSelectedListener(this);
+
             forecastBarchart.setData(data);
             forecastBarchart.invalidate();
         }

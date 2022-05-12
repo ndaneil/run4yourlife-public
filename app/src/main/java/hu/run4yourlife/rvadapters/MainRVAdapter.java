@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class MainRVAdapter extends RecyclerView.Adapter<MainRVAdapter.ViewHolder
         holder.tvname.setText(d.getChallengeName());
         holder.tvdist.setText(Math.round(d.getMaxDist()) + " m");
         if (position == currSelected){
-            holder.view.setBackgroundColor(Color.RED);
+            holder.view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.secondaryColor));
         }else {
             holder.view.setBackgroundColor(Color.TRANSPARENT);
         }
