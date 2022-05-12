@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -40,6 +41,7 @@ import hu.run4yourlife.interfaces.DbSummary;
 import hu.run4yourlife.interfaces.QualityData;
 import hu.run4yourlife.interfaces.RecommendedTime;
 import hu.run4yourlife.interfaces.StaticStuff;
+import hu.run4yourlife.interfaces.UserData;
 import hu.run4yourlife.rvadapters.MainRVAdapter;
 
 
@@ -255,6 +257,9 @@ public class MainActivity extends AppCompatActivity{
 
         YAxis left = chart.getAxisLeft();
         left.setDrawLabels(false);
+        LimitLine limitLine = new LimitLine(UserData.getAdvisedActivity());
+        limitLine.enableDashedLine(20f,20f,1);
+        left.addLimitLine(limitLine);
         left.setSpaceTop(25f);
         left.setSpaceBottom(25f);
         left.setDrawAxisLine(false);
@@ -325,7 +330,7 @@ public class MainActivity extends AppCompatActivity{
             values.add(entry);
 
             // specific colors
-            if (d.yValue >= 0)
+            if (d.yValue < UserData.getAdvisedActivity())
                 colors.add(red);
             else
                 colors.add(green);

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -222,6 +223,7 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
      */
     @Override
     public void onNothingSelected() {
-
+        TextView scroller = findViewById(R.id.scrollerText);
+        scroller.setText("");
     }
 }

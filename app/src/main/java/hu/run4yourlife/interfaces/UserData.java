@@ -25,6 +25,8 @@ public class UserData {
     private birthdate birth_date;
     private String sex;
     private Integer bodyweight;
+    //TODO make the advised_activity dynamic
+    private final static int advised_activity=25;
 
     /*public UserData(){            //Ez a konstruktor csak a teszt miatt van benne
         this.setName("asdf");
@@ -39,6 +41,7 @@ public class UserData {
         this.birth_date=new birthdate(sh.getInt("birthyear",0),sh.getInt("birthmonth",0),sh.getInt("birthday",0));
         this.sex=sh.getString("sex","");
         this.bodyweight=sh.getInt("bodyweight",0);
+
     }
 
     public void changeData(Context context){
@@ -58,9 +61,10 @@ public class UserData {
         editor.putInt("birthday",this.birth_date.day);
         editor.putString("sex",this.sex);
         editor.putInt("bodyweight",this.bodyweight);
+        editor.putInt("advised_activity",this.advised_activity);
         editor.commit();
     }
-
+    public static int getAdvisedActivity(){return advised_activity;}
     public String getName() {
         return name;
     }
