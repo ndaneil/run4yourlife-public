@@ -69,7 +69,6 @@ public class DbSummary{
             wkdat.add(val);
             start += 24*3600;
         }
-
         return wkdat;
     }
 }

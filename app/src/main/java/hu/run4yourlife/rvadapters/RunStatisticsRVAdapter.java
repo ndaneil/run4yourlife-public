@@ -67,6 +67,7 @@ public class RunStatisticsRVAdapter extends RecyclerView.Adapter<RunStatisticsRV
             public void run() {
                 db = Room.databaseBuilder(ctx.getApplicationContext(), RunningDatabase.class, StaticStuff.RUNDB_NAME).build();
                 runs = (ArrayList<RunhistoryDB>) db.myDataBase().getUsers();
+                //db.close();
 
                 ///today zero
                 Calendar date = new GregorianCalendar();
