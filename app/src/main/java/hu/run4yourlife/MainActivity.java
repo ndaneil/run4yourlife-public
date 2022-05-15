@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
     private BarChart chart;
     private static final String[] _permission = {Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION,
     Manifest.permission.ACCESS_COARSE_LOCATION/*,
-    Manifest.permission.ACCESS_BACKGROUND_LOCATION,*/,Manifest.permission.FOREGROUND_SERVICE};
+    Manifest.permission.ACCESS_BACKGROUND_LOCATION,*/,Manifest.permission.FOREGROUND_SERVICE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 
     MainRVAdapter adapter;
