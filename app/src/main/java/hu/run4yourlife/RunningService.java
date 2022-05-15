@@ -191,7 +191,7 @@ public class RunningService extends Service {
             @Override
             public void run() {
                 RunningDatabase db = Room.databaseBuilder(getApplicationContext(), RunningDatabase.class, StaticStuff.RUNDB_NAME).build();
-                RunhistoryDB newRun = new RunhistoryDB(TRACKING_ID_MS,System.currentTimeMillis()/1000L,runHistory);
+                RunhistoryDB newRun = new RunhistoryDB(challengeID,TRACKING_ID_MS,System.currentTimeMillis()/1000L,runHistory);
                 db.myDataBase().insertRun(newRun);
             }
         }).start();

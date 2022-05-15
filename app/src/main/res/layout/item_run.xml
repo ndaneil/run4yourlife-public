@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/item_run_view"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/invis"
+        android:textSize="25sp"
+        android:layout_margin="10dp"
+        android:text=""
+        android:id="@+id/item_run_ch_name"/>
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/invis"
+        android:textSize="25sp"
+        android:layout_margin="10dp"
+        android:text=""
+        android:id="@+id/item_run_date"/>
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/invis"
+        android:textSize="25sp"
+        android:layout_margin="10dp"
+        android:text=""
+        android:id="@+id/item_run_distance"/>
+
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/invis"
+        android:textSize="25sp"
+        android:layout_margin="10dp"
+        android:text=""
+        android:id="@+id/item_run_time"/>
+
+</LinearLayout>

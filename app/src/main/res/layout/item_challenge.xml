@@ -21,7 +21,7 @@
         android:textSize="25sp"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:text="100km"
+        android:text=""
         android:id="@+id/item_challenge_distance"/>
 
 </LinearLayout>

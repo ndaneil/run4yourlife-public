@@ -20,6 +20,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +35,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
 
@@ -45,7 +49,7 @@ import hu.run4yourlife.interfaces.UserData;
 import hu.run4yourlife.rvadapters.MainRVAdapter;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements OnChartValueSelectedListener {
 
     private static final int ALL_PERM_REQUEST = 1;
     private BarChart chart;
@@ -124,7 +128,7 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(it);
             }
         });
-        launcGraph();
+        launchGraph();
         checkApiKey();
 
     }
@@ -211,7 +215,7 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    private void launcGraph(){
+    private void launchGraph(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -225,6 +229,7 @@ public class MainActivity extends AppCompatActivity{
             }
         }).start();
     }
+
     private void drawGraph(ArrayList<Integer> s){
         chart = findViewById(R.id.weeklyChart);
         chart.setExtraTopOffset(-30f);
@@ -242,6 +247,9 @@ public class MainActivity extends AppCompatActivity{
         chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
         chart.setBackgroundColor(Color.TRANSPARENT);
+
+
+        chart.setOnChartValueSelectedListener(this);
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -269,6 +277,15 @@ public class MainActivity extends AppCompatActivity{
         left.setZeroLineWidth(0.7f);
         chart.getAxisRight().setEnabled(false);
         chart.getLegend().setEnabled(false);
+        chart.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                // This allows clicking twice on same selection to show the popup again
+                chart.getOnTouchListener().setLastHighlighted(null);
+                chart.highlightValues(null);
+                return false;
+            }
+        });
 
         // THIS IS THE ORIGINAL DATA YOU WANT TO PLOT
         final ArrayList<Data> data = new ArrayList<>();
@@ -276,6 +293,23 @@ public class MainActivity extends AppCompatActivity{
             data.add(new Data(i,Math.round(s.get(i)),"")); //TODO divide by 60 to get minutes
         }
         setData(data);
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        if(e.getY() != 0) {
+            Intent it = new Intent(MainActivity.this, RunStatisticsActivity.class);
+            it.putExtra("day", (e.getX()));
+            startActivity(it);
+        }
+    }
+
+    /**
+     * Called when nothing has been selected or an "un-select" has been made.
+     */
+    @Override
+    public void onNothingSelected() {
+        Log.i("chart", "nothing selected");
     }
 
     private void createNotificationChannel() {

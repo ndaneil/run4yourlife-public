@@ -16,6 +16,9 @@ public class RunhistoryDB {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name = "challengeID")
+    private int challengeID;
+
     @ColumnInfo(name = "timestamp")
     private long timestamp;
 
@@ -58,7 +61,8 @@ public class RunhistoryDB {
         this.timestamp = timestamp;
     }
 
-    public RunhistoryDB(long timestamp, long endtimestamp, ArrayList<RunningService.GPSCoordinate> gpsdata){
+    public RunhistoryDB(int challengeID, long timestamp, long endtimestamp, ArrayList<RunningService.GPSCoordinate> gpsdata){
+        this.challengeID=challengeID;
         this.timestamp = timestamp;
         this.endtimestamp = endtimestamp;
         this.gpsdata = gpsdata;
@@ -66,5 +70,12 @@ public class RunhistoryDB {
     }
 
 
+    public int getChallengeID() {
+        return challengeID;
+    }
+
+    public void setChallengeID(int challengeID) {
+        this.challengeID = challengeID;
+    }
 }
 
