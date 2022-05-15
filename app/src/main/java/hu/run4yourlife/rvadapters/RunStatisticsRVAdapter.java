@@ -41,6 +41,7 @@ import hu.run4yourlife.database.RunhistoryDB;
 import hu.run4yourlife.database.RunningDatabase;
 import hu.run4yourlife.interfaces.Challenge;
 import hu.run4yourlife.interfaces.Challenges;
+import hu.run4yourlife.interfaces.Speedtrap;
 import hu.run4yourlife.interfaces.StaticStuff;
 
 public class RunStatisticsRVAdapter extends RecyclerView.Adapter<RunStatisticsRVAdapter.ViewHolder> {
@@ -55,6 +56,7 @@ public class RunStatisticsRVAdapter extends RecyclerView.Adapter<RunStatisticsRV
     private int currSelected;
     ArrayList<RunhistoryDB> runs = new ArrayList<>();
     RunningDatabase db;
+    Speedtrap sp = new Speedtrap();
 
     public int getCurrSelected() {
         return currSelected;
@@ -153,6 +155,10 @@ public class RunStatisticsRVAdapter extends RecyclerView.Adapter<RunStatisticsRV
             }else {
                 holder.view.setBackgroundColor(Color.TRANSPARENT);
             }
+
+            ArrayList<Double> distances = sp.CalcAllDistance(d.getGpsdata());
+            holder.tvdist.setText(String.format("%.0f m", distances.get(distances.size() - 1)*1000));
+
 
 
 

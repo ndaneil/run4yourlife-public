@@ -34,6 +34,22 @@ public class Speedtrap {
         return Double.isNaN(ret)?0.0:ret;
     }
 
+    /**
+     * @param coords input coordinate array
+     * @return array of size input with distance data plus distance sum as last element
+     */
+    public ArrayList<Double> CalcAllDistance(ArrayList<RunningService.GPSCoordinate> coords){
+        ArrayList<Double> allDist = new ArrayList<>();
+        double sum=0;
+        for( int i=0;i<coords.size()-1;i++){
+            double temp=calcDist(coords.get(1),coords.get(i+1));
+            allDist.add(temp);
+            sum+=temp;
+        }
+        allDist.add(sum);
+        return allDist;
+    }
+
     private double calcTimeDiff(RunningService.GPSCoordinate a, RunningService.GPSCoordinate b) {
         return Math.abs(b.timestamp-a.timestamp)/Math.pow(10,7);
     }
