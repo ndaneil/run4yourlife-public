@@ -1,5 +1,7 @@
 package hu.run4yourlife.interfaces;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import hu.run4yourlife.RunningService;
@@ -45,8 +47,10 @@ public class Speedtrap {
             double temp=calcDist(coords.get(1),coords.get(i+1));
             allDist.add(temp);
             sum+=temp;
+            Log.i("distance",allDist.get(allDist.size()-1).toString());
         }
         allDist.add(sum);
+        Log.i("distance",allDist.get(allDist.size()-1).toString());
         return allDist;
     }
 
