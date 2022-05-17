@@ -288,7 +288,7 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
             set1 = new LineDataSet(inputData, "DataSet 1");
 
             set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            set1.setCubicIntensity(0.2f);
+            set1.setCubicIntensity(0.02f);
             set1.setDrawFilled(true);
             set1.setDrawCircles(false);
             set1.setLineWidth(1.8f);

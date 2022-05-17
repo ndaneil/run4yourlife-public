@@ -183,7 +183,7 @@ public class RunningService extends Service {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates("gps", 2000, 0, listener);//TODO change back...
+        locationManager.requestLocationUpdates("gps", 2000, 2, listener);
 
     }
 
