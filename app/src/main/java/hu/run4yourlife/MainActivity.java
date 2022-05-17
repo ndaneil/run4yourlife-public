@@ -283,6 +283,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
                 return false;
             }
         });
+        updateGraphData();
     }
     private void updateGraphData(){
         new Thread(new Runnable() {

@@ -12,6 +12,7 @@
     <color name="secondaryTextColor">#000000</color>
     <color name="lightBackgroundColor">#e8f5e9</color>
     <color name="light2BackgroundColor">#dcedc8</color>
+    <color name="transparentOverlayColor">#50c79100</color>
     <color name="invis">#00000000</color>
     <color name="red">#f44336</color>
     <color name="orange">#ff8f00</color>
