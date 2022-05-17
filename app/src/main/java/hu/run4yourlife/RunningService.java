@@ -142,6 +142,7 @@ public class RunningService extends Service {
         listener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                Log.i("RunningService","OnLocationChanged....");
                 double lat = location.getLatitude();
                 double lon = location.getLongitude();
                 double alt = location.getAltitude();
@@ -157,17 +158,17 @@ public class RunningService extends Service {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-
+                Log.i("RunningService","OnStatusChanged....");
             }
 
             @Override
             public void onProviderEnabled(String provider) {
-
+                Log.i("RunningService","OnProviderEnabled....");
             }
 
             @Override
             public void onProviderDisabled(String provider) {
-
+                Log.i("RunningService","OnProviderDisabled....");
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -196,7 +197,7 @@ public class RunningService extends Service {
                 RunningDatabase db = Room.databaseBuilder(getApplicationContext(), RunningDatabase.class, StaticStuff.RUNDB_NAME).build();
                 RunhistoryDB newRun = new RunhistoryDB(challengeID,TRACKING_ID_MS,System.currentTimeMillis()/1000L,runHistory);
                 db.myDataBase().insertRun(newRun);
-                //db.close();
+                db.close();
             }
         }).start();
     }
