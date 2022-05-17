@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
     @Override
     protected void onResume() {
         super.onResume();
-        launchGraph();
+        updateGraphData();
 
     }
 
@@ -226,22 +226,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
 
     }
 
-    private void launchGraph(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DbSummary sum = new DbSummary();
-                ArrayList<Float> s = sum.getSummaryFromDB(MainActivity.this);
-                for (Float i : s){
-                    Log.i("Summary","--" + i);
-                }
-                Log.i("Summary",s.toString());
-                drawGraph(s);
-            }
-        }).start();
-    }
-
-    private void drawGraph(ArrayList<Float> s){
+    private void launchGraph() {
         chart = findViewById(R.id.weeklyChart);
         chart.setExtraTopOffset(-30f);
         chart.setExtraBottomOffset(10f);
@@ -259,7 +244,6 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         chart.setDrawGridBackground(false);
         chart.setBackgroundColor(Color.TRANSPARENT);
 
-
         chart.setOnChartValueSelectedListener(this);
 
         XAxis xAxis = chart.getXAxis();
@@ -274,11 +258,12 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         xAxis.setCenterAxisLabels(false);
         xAxis.setGranularity(1f);
         YAxis left = chart.getAxisLeft();
-        left.setAxisMaximum(UserData.getAdvisedActivity()*2);
+        left.setAxisMaximum(UserData.getAdvisedActivity() * 2);
         left.setDrawLabels(true);
         LimitLine limitLine = new LimitLine(UserData.getAdvisedActivity());
-        limitLine.enableDashedLine(20f,20f,1);
+        limitLine.enableDashedLine(20f, 20f, 1);
         left.addLimitLine(limitLine);
+
         left.setSpaceTop(25f);
         left.setSpaceBottom(25f);
 
@@ -291,20 +276,74 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         chart.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                Log.i("ONTOUCH","LEFUT");
+                Log.i("ONTOUCH", "LEFUT");
                 // This allows clicking twice on same selection to show the popup again
                 chart.getOnTouchListener().setLastHighlighted(null);
                 chart.highlightValues(null);
                 return false;
             }
         });
+    }
+    private void updateGraphData(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DbSummary sum = new DbSummary();
+                ArrayList<Float> s = sum.getSummaryFromDB(MainActivity.this);
+                for (Float i : s){
+                    Log.i("Summary","--" + i);
+                }
+                Log.i("Summary",s.toString());
+                setGraphData(s);
+            }
+        }).start();
+    }
 
-        // THIS IS THE ORIGINAL DATA YOU WANT TO PLOT
+    private void setGraphData(ArrayList<Float> s){
         final ArrayList<Data> data = new ArrayList<>();
         for (int i = 0; i < s.size(); i++){
             data.add(new Data(i,Math.round(s.get(i)),"")); //TODO divide by 60 to get minutes
         }
-        setData(data);
+        ArrayList<BarEntry> values = new ArrayList<>();
+        ArrayList<Integer> colors = new ArrayList<>();
+
+        int green = getColor(R.color.primaryColor);
+        int red =getColor(R.color.red);
+
+        for (int i = 0; i < data.size(); i++) {
+
+            Data d = data.get(i);
+            BarEntry entry = new BarEntry(d.xValue, d.yValue);
+            values.add(entry);
+
+            // specific colors
+            if (d.yValue < UserData.getAdvisedActivity())
+                colors.add(red);
+            else
+                colors.add(green);
+        }
+
+        BarDataSet set;
+
+        if (chart.getData() != null &&
+                chart.getData().getDataSetCount() > 0) {
+            set = (BarDataSet) chart.getData().getDataSetByIndex(0);
+            set.setValues(values);
+            chart.getData().notifyDataChanged();
+            chart.notifyDataSetChanged();
+        } else {
+            set = new BarDataSet(values, "Values");
+            set.setColors(colors);
+            set.setValueTextColors(colors);
+
+            BarData bdata = new BarData(set);
+            bdata.setDrawValues(false);
+
+            bdata.setBarWidth(0.8f);
+
+            chart.setData(bdata);
+            chart.invalidate();
+        }
     }
 
     @Override
@@ -360,50 +399,6 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
                     _permission,
                     ALL_PERM_REQUEST
             );
-        }
-    }
-
-    private void setData(ArrayList<Data> dataList) {
-
-        ArrayList<BarEntry> values = new ArrayList<>();
-        ArrayList<Integer> colors = new ArrayList<>();
-
-        int green = getColor(R.color.primaryColor);
-        int red =getColor(R.color.red);
-
-        for (int i = 0; i < dataList.size(); i++) {
-
-            Data d = dataList.get(i);
-            BarEntry entry = new BarEntry(d.xValue, d.yValue);
-            values.add(entry);
-
-            // specific colors
-            if (d.yValue < UserData.getAdvisedActivity())
-                colors.add(red);
-            else
-                colors.add(green);
-        }
-
-        BarDataSet set;
-
-        if (chart.getData() != null &&
-                chart.getData().getDataSetCount() > 0) {
-            set = (BarDataSet) chart.getData().getDataSetByIndex(0);
-            set.setValues(values);
-            chart.getData().notifyDataChanged();
-            chart.notifyDataSetChanged();
-        } else {
-            set = new BarDataSet(values, "Values");
-            set.setColors(colors);
-            set.setValueTextColors(colors);
-
-            BarData data = new BarData(set);
-            data.setDrawValues(false);
-
-            data.setBarWidth(0.8f);
-
-            chart.setData(data);
-            chart.invalidate();
         }
     }
 
