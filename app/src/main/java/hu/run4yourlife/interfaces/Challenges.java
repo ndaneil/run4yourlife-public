@@ -43,11 +43,11 @@ public class Challenges extends JSONObject {
         // Creates an InputStream
         InputStream input = context.getResources().openRawResource(R.raw.challenges);
         String in = readStream(input);
-        Log.i("MyLog", in);
+        //Log.i("MyLog", in);
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Challenge>>(){}.getType();
         ChallengeList = gson.fromJson(in, type);
-        Log.i("Barmi","Barmi2");
+        //Log.i("Barmi","Barmi2");
         //fillData(in);
     }
 

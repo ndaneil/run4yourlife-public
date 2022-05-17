@@ -70,6 +70,8 @@ public class RunningService extends Service {
             this.accu = accu;
             this.timestamp = timestamp;
         }
+
+        public Double getAltitude() {return alt;}
     }
 
     ArrayList<GPSCoordinate> runHistory = new ArrayList<>();

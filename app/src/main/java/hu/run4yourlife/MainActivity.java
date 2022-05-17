@@ -292,9 +292,9 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
                 DbSummary sum = new DbSummary();
                 ArrayList<Float> s = sum.getSummaryFromDB(MainActivity.this);
                 for (Float i : s){
-                    Log.i("Summary","--" + i);
+                    //Log.i("Summary","--" + i);
                 }
-                Log.i("Summary",s.toString());
+                //Log.i("Summary",s.toString());
                 setGraphData(s);
             }
         }).start();

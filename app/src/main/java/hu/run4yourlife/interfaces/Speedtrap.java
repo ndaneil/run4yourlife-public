@@ -50,10 +50,10 @@ public class Speedtrap {
             double temp=calcDist(coords.get(i),coords.get(i+1));
             allDist.add(temp);
             sum+=temp;
-            Log.i("distance",allDist.get(allDist.size()-1).toString());
+            //Log.i("distance",allDist.get(allDist.size()-1).toString());
         }
         allDist.add(sum);
-        Log.i("distance",allDist.get(allDist.size()-1).toString());
+        //Log.i("distance",allDist.get(allDist.size()-1).toString());
         return allDist;
     }
 
