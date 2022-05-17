@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         xAxis.setDrawAxisLine(false);
         xAxis.setTextColor(Color.LTGRAY);
         xAxis.setTextSize(13f);
-        xAxis.setLabelCount(5);
+        //xAxis.setLabelCount(5);
         xAxis.setEnabled(false);
         xAxis.setCenterAxisLabels(false);
         xAxis.setGranularity(1f);

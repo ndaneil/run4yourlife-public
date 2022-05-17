@@ -35,30 +35,39 @@
             android:layout_weight="1"
             android:layout_margin="50dp"
             app:cardBackgroundColor="@color/lightBackgroundColor"
-            app:cardCornerRadius="25dp"
+            app:cardCornerRadius="20dp"
             android:clickable="true"
             android:focusable="true">
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="@color/invis">
-
+                android:background="@color/invis"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Speed Chart"
+                    android:background="@color/invis"/>
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/topChart"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp"
                     android:background="@color/invis"
                     />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Altitude"
+                    android:background="@color/invis"/>
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/bottomChart"
                     android:layout_width="match_parent"
                     android:background="@color/invis"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:layout_margin="5dp"/>
+                    />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
 

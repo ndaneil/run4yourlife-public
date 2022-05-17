@@ -231,7 +231,10 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
     private void initCharts(LineChart lineChart){
         lineChart.setViewPortOffsets(0, 0, 0, 0);
         lineChart.setBackgroundColor(getColor(R.color.light2BackgroundColor));
-
+        lineChart.setExtraTopOffset(-30f);
+        lineChart.setExtraBottomOffset(10f);
+        lineChart.setExtraLeftOffset(70f);
+        lineChart.setExtraRightOffset(70f);
         // no description text
         lineChart.getDescription().setEnabled(false);
 
@@ -247,18 +250,17 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
 
         lineChart.setDrawGridBackground(false);
         lineChart.setMaxHighlightDistance(300);
-
         XAxis x = lineChart.getXAxis();
         x.setEnabled(true);
-
+        x.setDrawLabels(true);
         YAxis y = lineChart.getAxisLeft();
         y.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-        y.setLabelCount(6, false);
-        y.setTextColor(R.color.primaryTextColor);
-        y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        y.setDrawGridLines(false);
-        y.setAxisLineColor(R.color.primaryColor);
 
+        y.setTextColor(R.color.primaryTextColor);
+        //y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        y.setDrawGridLines(true);
+        y.setAxisLineColor(R.color.primaryColor);
+        y.setDrawLabels(true);
         lineChart.getAxisRight().setEnabled(false);
 
         lineChart.getLegend().setEnabled(false);
