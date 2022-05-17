@@ -37,7 +37,7 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
     ArrayList<RunhistoryDB> runs = new ArrayList<>();
     RunhistoryDB currentRun;
     int selectedRunId;
-    Speedtrap sp = new Speedtrap();
+    //Speedtrap sp = new Speedtrap();
     MapView map;
 
 
@@ -45,6 +45,9 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_run_statistics);
+        Configuration.getInstance().setUserAgentValue(getPackageName());
+        map = (MapView) findViewById(R.id.mapView);
+        map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
         Thread myThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -58,48 +61,47 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
                         break;
                     }
                 }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(map != null) {
+                            map.setMultiTouchControls(true);
+                            IMapController mapController = map.getController();
+                            mapController.setZoom(20);
+                            RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(SingleRunStatisticsActivity.this, map);
+                            mRotationGestureOverlay.setEnabled(true);
+                            map.setMultiTouchControls(true);
+                            map.getOverlays().add(mRotationGestureOverlay);
+                            Polyline line = new Polyline();
+                            line.setWidth(20f);
+                            ArrayList<GeoPoint> pts = new ArrayList<>();
+
+                            for (RunningService.GPSCoordinate coord : currentRun.getGpsdata()) {
+
+                                GeoPoint point = new GeoPoint(coord.lat, coord.lon);
+                                Marker m = new Marker(map);
+                                m.setPosition(point);
+                                m.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                m.setTitle("This is ");
+                                map.getOverlays().add(m);
+                                pts.add(point);
+                            }
+                            line.setPoints(pts);
+                            line.setGeodesic(true);
+                            map.getOverlayManager().add(line);
+                            mapController.setCenter(pts.get(0));
+                        }else{
+                            Log.e("Custom Error","Map was null");
+                        }
+                    }
+                });
             }
         });
         myThread.start();
-        Configuration.getInstance().setUserAgentValue(getPackageName());
-        map = (MapView) findViewById(R.id.mapView);
-        map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
 
 
-        if(map != null) {
-            map.setMultiTouchControls(true);
-            try {
-                myThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            IMapController mapController = map.getController();
-            mapController.setZoom(20);
-            RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(this, map);
-            mRotationGestureOverlay.setEnabled(true);
-            map.setMultiTouchControls(true);
-            map.getOverlays().add(mRotationGestureOverlay);
-            Polyline line = new Polyline();
-            line.setWidth(20f);
-            ArrayList<GeoPoint> pts = new ArrayList<>();
 
-            for (RunningService.GPSCoordinate coord : currentRun.getGpsdata()) {
 
-                GeoPoint point = new GeoPoint(coord.lat, coord.lon);
-                Marker m = new Marker(map);
-                m.setPosition(point);
-                m.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                m.setTitle("This is ");
-                map.getOverlays().add(m);
-                pts.add(point);
-            }
-            line.setPoints(pts);
-            line.setGeodesic(true);
-            map.getOverlayManager().add(line);
-            mapController.setCenter(pts.get(0));
-        }else{
-            Log.e("Custom Error","Map was null");
-        }
 
     }
 }

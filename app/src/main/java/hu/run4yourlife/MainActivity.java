@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>*/
+    long clicktimeoutMS = 0;
 
     @Override
     protected void onResume() {
@@ -309,7 +310,8 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
     @Override
     public void onValueSelected(Entry e, Highlight h) {
         Log.i("ONVALUESELECTED","LEFUT");
-        if(e.getY() != 0) {
+        if(e.getY() != 0 && System.currentTimeMillis()-clicktimeoutMS > 100) {
+            clicktimeoutMS = System.currentTimeMillis();
             Intent it = new Intent(MainActivity.this, RunStatisticsActivity.class);
             it.putExtra("day", (e.getX()));
             startActivity(it);
