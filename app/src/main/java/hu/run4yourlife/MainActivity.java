@@ -290,6 +290,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         chart.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                Log.i("ONTOUCH","LEFUT");
                 // This allows clicking twice on same selection to show the popup again
                 chart.getOnTouchListener().setLastHighlighted(null);
                 chart.highlightValues(null);
@@ -307,6 +308,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
+        Log.i("ONVALUESELECTED","LEFUT");
         if(e.getY() != 0) {
             Intent it = new Intent(MainActivity.this, RunStatisticsActivity.class);
             it.putExtra("day", (e.getX()));
