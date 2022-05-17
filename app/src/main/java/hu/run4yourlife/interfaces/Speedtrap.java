@@ -47,7 +47,7 @@ public class Speedtrap {
         ArrayList<Double> allDist = new ArrayList<>();
         double sum=0;
         for( int i=0;i<coords.size()-1;i++){
-            double temp=calcDist(coords.get(1),coords.get(i+1));
+            double temp=calcDist(coords.get(i),coords.get(i+1));
             allDist.add(temp);
             sum+=temp;
             Log.i("distance",allDist.get(allDist.size()-1).toString());

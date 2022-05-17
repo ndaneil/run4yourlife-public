@@ -286,6 +286,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         left.setZeroLineWidth(0.7f);
         chart.getAxisRight().setEnabled(false);
         chart.getLegend().setEnabled(false);
+
         chart.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

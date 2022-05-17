@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -71,7 +72,7 @@ public class RunStatisticsRVAdapter extends RecyclerView.Adapter<RunStatisticsRV
             public void run() {
                 db = Room.databaseBuilder(ctx.getApplicationContext(), RunningDatabase.class, StaticStuff.RUNDB_NAME).build();
                 runs = (ArrayList<RunhistoryDB>) db.myDataBase().getUsers();
-                //db.close();
+                db.close();
 
                 ///today zero
                 Calendar date = new GregorianCalendar();
@@ -96,8 +97,14 @@ public class RunStatisticsRVAdapter extends RecyclerView.Adapter<RunStatisticsRV
                     }
                 }
                 runs.removeAll(valuesToRemove);
+                ((AppCompatActivity) ctx).runOnUiThread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                RunStatisticsRVAdapter.super.notifyDataSetChanged();
+                                                            }
+                                                        }
 
-
+                );
 
             }
         }).start();
