@@ -10,7 +10,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import hu.run4yourlife.RunningService;
-
+/**
+ * Dani
+ * */
 public class ArrayConverter implements Serializable {
     @TypeConverter // note this annotation
     public String fromOptionValuesList(ArrayList<RunningService.GPSCoordinate> optionValues) {

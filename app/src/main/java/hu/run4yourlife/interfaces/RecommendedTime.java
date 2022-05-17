@@ -20,6 +20,9 @@ import java.net.URL;
 import java.sql.Time;
 import java.util.ArrayList;
 
+/**
+ * Dani , getBestTime: Kinga+Matyi
+ */
 public class RecommendedTime {
 
     private Context ctx;

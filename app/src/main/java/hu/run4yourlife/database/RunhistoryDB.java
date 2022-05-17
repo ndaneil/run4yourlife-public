@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 import hu.run4yourlife.RunningService;
 
+/**
+ * Dani
+ */
 @Entity(tableName="FUTASOK")
 public class RunhistoryDB {
 

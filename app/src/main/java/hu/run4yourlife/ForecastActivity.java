@@ -36,7 +36,7 @@ import hu.run4yourlife.interfaces.RecommendedTime;
 import hu.run4yourlife.interfaces.StaticStuff;
 
 /***
- * 100% L
+ *  90% L+ Ferkó
  */
 public class ForecastActivity extends AppCompatActivity implements OnChartValueSelectedListener {
 
@@ -97,7 +97,6 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
                     }
                     QualityData nowData = StaticStuff.recommendedTime.getCurrent();
                     setData(forecastData);
-
 
                     int picturename= R.drawable.sunny;
                     int id = nowData.weatherID;

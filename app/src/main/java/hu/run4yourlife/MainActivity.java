@@ -48,7 +48,9 @@ import hu.run4yourlife.interfaces.StaticStuff;
 import hu.run4yourlife.interfaces.UserData;
 import hu.run4yourlife.rvadapters.MainRVAdapter;
 
-
+/**
+ * Dani+ Levi
+ */
 public class MainActivity extends AppCompatActivity implements OnChartValueSelectedListener {
 
     private static final int ALL_PERM_REQUEST = 1;
@@ -270,8 +272,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         left.addLimitLine(limitLine);
         left.setSpaceTop(25f);
         left.setSpaceBottom(25f);
-        left.setDrawAxisLine(false);
-        left.setDrawGridLines(false);
+
         left.setDrawZeroLine(true); // draw a zero line
         left.setZeroLineColor(Color.GRAY);
         left.setZeroLineWidth(0.7f);

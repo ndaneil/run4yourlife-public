@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import hu.run4yourlife.RunningService;
 
+/**
+ * Kinga + Matyi;  Levi
+ */
 public class Speedtrap {
     private static final double r = 6378100;
     private static final double pi = 3.14159265359;

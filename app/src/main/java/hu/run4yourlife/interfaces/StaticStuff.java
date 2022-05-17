@@ -2,6 +2,9 @@ package hu.run4yourlife.interfaces;
 
 import hu.run4yourlife.RunningService;
 
+/**
+ * Dani
+ */
 public class StaticStuff {
     public static String WeatherApiKey = null;
 

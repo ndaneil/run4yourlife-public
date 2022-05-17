@@ -33,6 +33,9 @@ import android.util.Log;
 
 import hu.run4yourlife.R;
 
+/**
+ * Kinga+Matyi
+ */
 public class Challenges extends JSONObject {
     private ArrayList<Challenge> ChallengeList;
 

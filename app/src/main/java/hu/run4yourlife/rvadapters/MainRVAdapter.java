@@ -23,6 +23,9 @@ import hu.run4yourlife.interfaces.Challenge;
 import hu.run4yourlife.interfaces.Challenges;
 import hu.run4yourlife.interfaces.StaticStuff;
 
+/**
+ * Dani
+ */
 public class MainRVAdapter extends RecyclerView.Adapter<MainRVAdapter.ViewHolder> {
 
     /*public interface OnItemClickCallback{

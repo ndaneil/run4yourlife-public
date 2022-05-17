@@ -17,6 +17,9 @@ import java.util.ArrayList;
 
 import hu.run4yourlife.interfaces.Speedtrap;
 
+/**
+ * Dani
+ */
 public class SingleLocation {
     public interface LocationReceivedCallback{
         void onLocationReceived(double lat, double lon, double hei, double accu);

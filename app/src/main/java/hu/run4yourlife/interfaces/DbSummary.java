@@ -26,6 +26,9 @@ import java.util.concurrent.TimeUnit;
 import hu.run4yourlife.database.RunhistoryDB;
 import hu.run4yourlife.database.RunningDatabase;
 
+/**
+ * Dani+ Ferkó
+ */
 public class DbSummary{
 
     public ArrayList<Integer> getSummaryFromDB(Context ctx){

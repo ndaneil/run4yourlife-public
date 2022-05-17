@@ -11,6 +11,9 @@ import android.util.Log;
 import hu.run4yourlife.rvadapters.MainRVAdapter;
 import hu.run4yourlife.rvadapters.RunStatisticsRVAdapter;
 
+/**
+ * Levi
+ */
 public class RunStatisticsActivity extends AppCompatActivity {
     RecyclerView rv;
     RunStatisticsRVAdapter adapter;

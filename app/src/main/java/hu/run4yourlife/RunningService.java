@@ -36,6 +36,9 @@ import hu.run4yourlife.interfaces.Challenges;
 import hu.run4yourlife.interfaces.Speedtrap;
 import hu.run4yourlife.interfaces.StaticStuff;
 
+/**
+ * Dani
+ */
 public class RunningService extends Service {
 
     public static final String ACTION_START = "START";

@@ -29,6 +29,9 @@ import hu.run4yourlife.database.RunningDatabase;
 import hu.run4yourlife.interfaces.Speedtrap;
 import hu.run4yourlife.interfaces.StaticStuff;
 
+/**
+ * Levi
+ */
 public class SingleRunStatisticsActivity extends AppCompatActivity {
     RunningDatabase db;
     ArrayList<RunhistoryDB> runs = new ArrayList<>();

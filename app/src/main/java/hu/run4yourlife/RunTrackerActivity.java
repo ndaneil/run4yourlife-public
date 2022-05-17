@@ -40,6 +40,9 @@ import hu.run4yourlife.interfaces.Challenge;
 import hu.run4yourlife.interfaces.Challenges;
 import hu.run4yourlife.interfaces.StaticStuff;
 
+/**
+ * Dani + Levi
+ */
 public class RunTrackerActivity extends AppCompatActivity implements RunningService.DataChangeCallback {
     TextView challengeName;
     BarChart chart;

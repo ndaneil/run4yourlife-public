@@ -8,7 +8,10 @@ import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 
 import java.util.Calendar;
-
+/**
+ * Ferkó
+ *
+ * */
 public class UserData {
 
     private String name;

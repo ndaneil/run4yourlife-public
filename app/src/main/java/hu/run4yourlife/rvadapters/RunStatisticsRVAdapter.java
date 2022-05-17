@@ -44,6 +44,10 @@ import hu.run4yourlife.interfaces.Challenges;
 import hu.run4yourlife.interfaces.Speedtrap;
 import hu.run4yourlife.interfaces.StaticStuff;
 
+
+/**
+ * Levi
+ */
 public class RunStatisticsRVAdapter extends RecyclerView.Adapter<RunStatisticsRVAdapter.ViewHolder> {
 
     /*public interface OnItemClickCallback{
