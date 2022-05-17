@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -147,6 +148,7 @@ public class RunTrackerActivity extends AppCompatActivity implements RunningServ
                     chart.getData().getDataSetCount() > 0) {
                 set = (BarDataSet) chart.getData().getDataSetByIndex(0);
                 //TODO UPDATE data
+                //Log.i("RunTrackerActivity","UpdateData...");
                 values.clear();
                 double runningtotal = distanceCurrent;
                 String nexstoplabel = runningtotal >0 ? null: ch.getStops().get(0);
@@ -183,6 +185,7 @@ public class RunTrackerActivity extends AppCompatActivity implements RunningServ
 
                 chart.getData().notifyDataChanged();
                 chart.notifyDataSetChanged();
+                chart.invalidate();
 
             } else {
                 int color = Color.rgb(255, 127, 0);
