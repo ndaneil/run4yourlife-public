@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -51,6 +52,7 @@ public class RunTrackerActivity extends AppCompatActivity implements RunningServ
     ImageView foodImage;
     TextView timerTV;
     FloatingActionButton floatingStartButton;
+    TextView avgSpeed;
 
     static int challengedID = -1;
 
@@ -77,7 +79,7 @@ public class RunTrackerActivity extends AppCompatActivity implements RunningServ
         floatingStartButton = findViewById(R.id.floatingStartTimer);
         floatingStartButton.setImageResource(android.R.drawable.ic_media_pause);
         challengedID = getIntent().getIntExtra(StaticStuff.RUN_EXTRA_ID_NAME,0);
-
+        avgSpeed = findViewById(R.id.avgSpeed);
 
 
         try {
@@ -288,15 +290,19 @@ public class RunTrackerActivity extends AppCompatActivity implements RunningServ
     @Override
     public void newData(double totalDistance, long timeElapsed, double lat, double lon, double accu) {
         //Toast.makeText(getApplicationContext(),"GPS Data received...",Toast.LENGTH_SHORT).show();
-        this.distanceCurrent = totalDistance*1000;
+        this.distanceCurrent = totalDistance*1000; //meter
         startMS = timeElapsed;
+        long timediff= (System.currentTimeMillis()/1000L)-startMS;
         runOnUiThread(new Runnable() {
+            @SuppressLint("DefaultLocale")
             @Override
             public void run() {
                 //timerTV.setText("" + distanceCurrent);
                 createGraph();
                 TextView tv = findViewById(R.id.kmDone);
-                tv.setText("" + (Math.round(distanceCurrent*100)/100000.0) + " km");
+                tv.setText(String.format("%.3f km", (distanceCurrent) / 1000.0));
+                avgSpeed.setText(String.format("%.1f min/km", ( (timediff/60f)/(distanceCurrent/1000.0) )));
+                //Log.i("SPEEDLOG",""+( (timediff/60f) +"----" + (distanceCurrent/1000.0)  ));
                 //chart.notifyDataSetChanged();
                 //nextStopDistance.setText(" " + lat + ";" + lon);
             }

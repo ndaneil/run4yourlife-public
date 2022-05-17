@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -75,14 +76,11 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
         map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
         fab=findViewById(R.id.mapFAB);
         linearLayoutCompat = findViewById(R.id.linearLayoutOverlay);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(linearLayoutCompat.getVisibility()==View.GONE){
-                    linearLayoutCompat.setVisibility(View.VISIBLE);
-                }else{
-                    linearLayoutCompat.setVisibility(View.GONE);
-                }
+        fab.setOnClickListener(view -> {
+            if(linearLayoutCompat.getVisibility()==View.GONE){
+                linearLayoutCompat.setVisibility(View.VISIBLE);
+            }else{
+                linearLayoutCompat.setVisibility(View.GONE);
             }
         });
         topchart=findViewById(R.id.topChart);
@@ -237,7 +235,6 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
         lineChart.setExtraRightOffset(70f);
         // no description text
         lineChart.getDescription().setEnabled(false);
-
         // disable touch gestures
         lineChart.setTouchEnabled(false);
 
@@ -251,11 +248,12 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
         lineChart.setDrawGridBackground(false);
         lineChart.setMaxHighlightDistance(300);
         XAxis x = lineChart.getXAxis();
+        x.setGranularity(1f);
+        x.setGranularityEnabled(true);
         x.setEnabled(true);
         x.setDrawLabels(true);
         YAxis y = lineChart.getAxisLeft();
         y.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-
         y.setTextColor(R.color.primaryTextColor);
         //y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         y.setDrawGridLines(true);

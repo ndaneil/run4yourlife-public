@@ -1,5 +1,6 @@
 package hu.run4yourlife;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     void checkApiKey(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String apiKey = prefs.getString("KEY",null);
@@ -162,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
 
             alertDialog.setPositiveButton("YES",
                     new DialogInterface.OnClickListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.S)
                         public void onClick(DialogInterface dialog, int which) {
                             String key = input.getText().toString();
                             SharedPreferences.Editor e = prefs.edit();
@@ -186,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     private void launchLocation(){
         SingleLocation sl = new SingleLocation(this, new SingleLocation.LocationReceivedCallback() {
             @Override
@@ -207,14 +212,14 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
                                 @Override
                                 public void run() {
                                     TextView uvindex = findViewById(R.id.uvIndex);
-                                    uvindex.setText("UV index: " + StaticStuff.recommendedTime.getCurrent().uvi);
+                                    uvindex.setText(String.format("UV index: %s", StaticStuff.recommendedTime.getCurrent().uvi));
                                     TextView airw = findViewById(R.id.airQuality);
-                                    airw.setText("Air Quality: " + StaticStuff.recommendedTime.getCurrent().airQualityIndex);
+                                    airw.setText(String.format("Air Quality: %s", StaticStuff.recommendedTime.getCurrent().airQualityIndex));
                                     TextView best = findViewById(R.id.bestTime);
                                     QualityData bs = StaticStuff.recommendedTime.getBestTime();
                                     int ourtime = new java.util.Date((long) bs.timeIndex * 1000).getHours();
 
-                                    best.setText(" " + ourtime + ":00-" + (ourtime + 1) % 24 + ":00");
+                                    best.setText(String.format(" %d:00-%d:00", ourtime, (ourtime + 1) % 24));
                                 }
                             });
                         }
@@ -272,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         left.setZeroLineWidth(0.7f);
         chart.getAxisRight().setEnabled(false);
         chart.getLegend().setEnabled(false);
-
+/*
         chart.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -282,7 +287,8 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
                 chart.highlightValues(null);
                 return false;
             }
-        });
+        });*/
+
         updateGraphData();
     }
     private void updateGraphData(){

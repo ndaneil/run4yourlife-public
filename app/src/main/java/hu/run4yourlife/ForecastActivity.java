@@ -1,28 +1,24 @@
 package hu.run4yourlife;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.LimitLine;
+
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
@@ -43,10 +39,10 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
     ImageView weatherImage;
     TextView currentTemp;
     BarChart forecastBarchart;
-    ScrollView detailedForecast;
     ArrayList<RecommendedTime.TimeData> forecastData;
     //RecommendedTime RT;
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,14 +124,14 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            currentTemp.setText(nowData.currentTemp + " °C");
+                            currentTemp.setText(String.format("%s °C", nowData.currentTemp));
                             weatherImage.setImageResource(finalPicturename);
                             weatherImage.setVisibility(View.VISIBLE);
                         }
                     });
     }
     private void setData(ArrayList<RecommendedTime.TimeData> dataList) {
-        int currentHour = dataList.get(0).hourtime;
+        //int currentHour = dataList.get(0).hourtime;
         ArrayList<BarEntry> values = new ArrayList<>();
         ArrayList<Integer> colors = new ArrayList<>();
         ArrayList<String> xValues = new ArrayList<>();
@@ -154,9 +150,9 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
             xValues.add(dataList.get(i).getHourString());
 
             // specific colors
-            if (d.quality >= 4)
+            if (d.quality >= StaticStuff.RED_ZONE)
                 colors.add(red);
-            else if(d.quality>=2.5)
+            else if(d.quality>=StaticStuff.ORANGE_ZONE)
                 colors.add(yellow);
             else
                 colors.add(green);

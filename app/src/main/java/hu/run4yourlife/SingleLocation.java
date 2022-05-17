@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class SingleLocation {
         callback.add(cb);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     public void initLocationRequest(){
         locationManager = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
         locationManager.getProvider(FUSED_PROVIDER);
@@ -62,7 +64,7 @@ public class SingleLocation {
                 double lon = location.getLongitude();
                 double alt = location.getAltitude();
                 float accu = location.getAccuracy();
-                long nou = System.currentTimeMillis();
+                long now = System.currentTimeMillis();
                 locationManager.removeUpdates(this);
                 if(callback!=null){
                     for (LocationReceivedCallback cb : callback)

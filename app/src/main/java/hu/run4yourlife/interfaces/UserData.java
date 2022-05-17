@@ -28,7 +28,7 @@ public class UserData {
     private birthdate birth_date;
     private String sex;
     private Integer bodyweight;
-    //TODO make the advised_activity dynamic
+    //TODO make the advised_activity dynamic -   activity type
     private final static int advised_activity=25;
 
     /*public UserData(){            //Ez a konstruktor csak a teszt miatt van benne

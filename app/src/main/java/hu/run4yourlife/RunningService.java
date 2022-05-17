@@ -183,7 +183,7 @@ public class RunningService extends Service {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates("gps", 2000, 2, listener);
+        locationManager.requestLocationUpdates("gps", StaticStuff.LOCATION_DELAY_MILLIS, StaticStuff.LOCATION_DELAY_METERS, listener);
 
     }
 

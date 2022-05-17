@@ -15,4 +15,18 @@
     <string name="birth_year">Year</string>
     <string name="birth_month">Month</string>
     <string name="birth_day">Day</string>
+    <string name="weather_image">weather image</string>
+    <string name="air_quality_placeholder">Air Quality: —</string>
+    <string name="uv_index_placeholder">UV index: —</string>
+    <string name="loading">loading</string>
+    <string name="best_time_to_run">Best time to Run:</string>
+    <string name="profilepicture_desc">ProfilePicture</string>
+    <string name="food_image_desc">food image</string>
+    <string name="timer_placeholder">00:00</string>
+    <string name="distance_placeholder">0.0 km</string>
+    <string name="speed_chart">Speed Chart</string>
+    <string name="altitude">Altitude</string>
+    <string name="open_extras_desc">open extras</string>
+    <string name="start_button_desc">start button</string>
+    <string name="kov_meg">Következő megálló:</string>
 </resources>

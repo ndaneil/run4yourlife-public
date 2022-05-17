@@ -74,7 +74,7 @@ public class MainRVAdapter extends RecyclerView.Adapter<MainRVAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Challenge d = challenges.get(position);
         holder.tvname.setText(d.getChallengeName());
-        holder.tvdist.setText(Math.round(d.getMaxDist()) + " m");
+        holder.tvdist.setText((String.format("%d m", Math.round(d.getMaxDist()))));
         if (position == currSelected){
             holder.view.setBackgroundColor(ContextCompat.getColor(ctx, R.color.secondaryColor));
         }else {

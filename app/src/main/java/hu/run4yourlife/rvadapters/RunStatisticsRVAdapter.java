@@ -1,5 +1,6 @@
 package hu.run4yourlife.rvadapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -82,7 +83,7 @@ public class RunStatisticsRVAdapter extends RecyclerView.Adapter<RunStatisticsRV
                 date.set(Calendar.SECOND, 0);
                 date.set(Calendar.MILLISECOND, 0);
                 ///selected day zero
-                long selectedDayMillis = date.getTimeInMillis()+ selectedDay*24*3600*1000;
+                long selectedDayMillis = date.getTimeInMillis()+ (long) selectedDay *24*3600*1000;
                 Date old = new Date(selectedDayMillis);
                 Log.i("DATE",old.toLocaleString());
                 Calendar old_calendar = new GregorianCalendar();
@@ -142,6 +143,7 @@ public class RunStatisticsRVAdapter extends RecyclerView.Adapter<RunStatisticsRV
         return vh;
     }
 
+    @SuppressLint("DefaultLocale")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {

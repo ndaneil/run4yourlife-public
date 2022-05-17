@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Speed Chart"
+                    android:text="@string/speed_chart"
                     android:background="@color/invis"/>
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/topChart"
@@ -59,7 +59,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Altitude"
+                    android:text="@string/altitude"
                     android:background="@color/invis"/>
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/bottomChart"
@@ -79,7 +79,7 @@
         android:layout_gravity="center"
         android:clickable="true"
         android:layout_margin="20dp"
-        android:contentDescription="open extras"
+        android:contentDescription="@string/open_extras_desc"
         android:focusable="true"
         app:fabCustomSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
