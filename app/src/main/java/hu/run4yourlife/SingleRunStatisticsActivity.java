@@ -85,6 +85,14 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
                                 double distRequired = ch.getDistances().get(0);
                                 RunningService.GPSCoordinate last = null;
                                 for (RunningService.GPSCoordinate coord : currentRun.getGpsdata()) {
+                                    GeoPoint point = new GeoPoint(coord.lat, coord.lon);
+                                    pts.add(point);
+                                }
+                                line.setPoints(pts);
+                                line.setGeodesic(true);
+                                map.getOverlayManager().add(line);
+                                mapController.setCenter(pts.get(0));
+                                for (RunningService.GPSCoordinate coord : currentRun.getGpsdata()) {
 
                                     GeoPoint point = new GeoPoint(coord.lat, coord.lon);
 
@@ -95,7 +103,7 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
                                         m.setTitle(ch.getStops().get(currIdx));
                                         map.getOverlays().add(m);
                                     }else{
-                                        distRequired -= sp.calcDist(last,coord)*1000.0;//TODO remove 2nd multiplier
+                                        distRequired -= sp.calcDist(last,coord)*1000.0;
                                         Log.i("SingleRunStatistics","DistRequired:" + distRequired + " currentIdx:" + currIdx);
                                         if (distRequired < 0 && currIdx + 1 < ch.getStops().size()){
                                             currIdx++;
@@ -111,12 +119,8 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
                                     }
                                     last = coord;
 
-                                    pts.add(point);
+                                    //pts.add(point);
                                 }
-                                line.setPoints(pts);
-                                line.setGeodesic(true);
-                                map.getOverlayManager().add(line);
-                                mapController.setCenter(pts.get(0));
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
