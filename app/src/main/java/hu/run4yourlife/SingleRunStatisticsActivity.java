@@ -1,6 +1,7 @@
 package hu.run4yourlife;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.room.Room;
 import org.osmdroid.views.*;
@@ -11,6 +12,11 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -42,6 +48,10 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
     int selectedRunId;
     Speedtrap sp = new Speedtrap();
     MapView map;
+    FloatingActionButton fab;
+    LineChart topchart;
+    LineChart bottomchart;
+    LinearLayout linearLayoutCompat;
 
 
     @Override
@@ -51,6 +61,20 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
         Configuration.getInstance().setUserAgentValue(getPackageName());
         map = (MapView) findViewById(R.id.mapView);
         map.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+        fab=findViewById(R.id.mapFAB);
+        linearLayoutCompat = findViewById(R.id.linearLayoutOverlay);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(linearLayoutCompat.getVisibility()==View.GONE){
+                    linearLayoutCompat.setVisibility(View.VISIBLE);
+                }else{
+                    linearLayoutCompat.setVisibility(View.GONE);
+                }
+            }
+        });
+        topchart=findViewById(R.id.topChart);
+        bottomchart=findViewById(R.id.bottomChart);
         Thread myThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -75,6 +99,7 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
                             mRotationGestureOverlay.setEnabled(true);
                             map.setMultiTouchControls(true);
                             map.getOverlays().add(mRotationGestureOverlay);
+                            map.setBuiltInZoomControls(false);
                             Polyline line = new Polyline();
                             line.setWidth(20f);
                             ArrayList<GeoPoint> pts = new ArrayList<>();

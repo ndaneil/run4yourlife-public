@@ -16,6 +16,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayoutOverlay"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -39,16 +41,21 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/invis">
 
                 <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/topChart"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
+                    android:background="@color/invis"
                     />
                 <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/bottomChart"
                     android:layout_width="match_parent"
+                    android:background="@color/invis"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"/>
