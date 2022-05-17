@@ -84,6 +84,14 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>*/
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        launchGraph();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
