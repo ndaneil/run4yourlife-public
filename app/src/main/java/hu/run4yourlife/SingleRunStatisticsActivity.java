@@ -22,10 +22,13 @@ import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import hu.run4yourlife.database.RunhistoryDB;
 import hu.run4yourlife.database.RunningDatabase;
+import hu.run4yourlife.interfaces.Challenge;
+import hu.run4yourlife.interfaces.Challenges;
 import hu.run4yourlife.interfaces.Speedtrap;
 import hu.run4yourlife.interfaces.StaticStuff;
 
@@ -37,7 +40,7 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
     ArrayList<RunhistoryDB> runs = new ArrayList<>();
     RunhistoryDB currentRun;
     int selectedRunId;
-    //Speedtrap sp = new Speedtrap();
+    Speedtrap sp = new Speedtrap();
     MapView map;
 
 
@@ -76,20 +79,49 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
                             line.setWidth(20f);
                             ArrayList<GeoPoint> pts = new ArrayList<>();
 
-                            for (RunningService.GPSCoordinate coord : currentRun.getGpsdata()) {
+                            try {
+                                Challenge ch = new Challenges(SingleRunStatisticsActivity.this).getChallengeDetailsForID(currentRun.getChallengeID());
+                                int currIdx = 0;
+                                double distRequired = ch.getDistances().get(0);
+                                RunningService.GPSCoordinate last = null;
+                                for (RunningService.GPSCoordinate coord : currentRun.getGpsdata()) {
 
-                                GeoPoint point = new GeoPoint(coord.lat, coord.lon);
-                                Marker m = new Marker(map);
-                                m.setPosition(point);
-                                m.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                                m.setTitle("This is ");
-                                map.getOverlays().add(m);
-                                pts.add(point);
+                                    GeoPoint point = new GeoPoint(coord.lat, coord.lon);
+
+                                    if(currIdx == 0 && last == null){
+                                        Marker m = new Marker(map);
+                                        m.setPosition(point);
+                                        m.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                        m.setTitle(ch.getStops().get(currIdx));
+                                        map.getOverlays().add(m);
+                                    }else{
+                                        distRequired -= sp.calcDist(last,coord)*1000.0;//TODO remove 2nd multiplier
+                                        Log.i("SingleRunStatistics","DistRequired:" + distRequired + " currentIdx:" + currIdx);
+                                        if (distRequired < 0 && currIdx + 1 < ch.getStops().size()){
+                                            currIdx++;
+                                            distRequired += ch.getDistances().get(currIdx);
+                                            Marker m = new Marker(map);
+                                            m.setPosition(point);
+                                            m.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                            m.setTitle(ch.getStops().get(currIdx));
+                                            map.getOverlays().add(m);
+                                        }
+
+
+                                    }
+                                    last = coord;
+
+                                    pts.add(point);
+                                }
+                                line.setPoints(pts);
+                                line.setGeodesic(true);
+                                map.getOverlayManager().add(line);
+                                mapController.setCenter(pts.get(0));
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                            line.setPoints(pts);
-                            line.setGeodesic(true);
-                            map.getOverlayManager().add(line);
-                            mapController.setCenter(pts.get(0));
+
+
                         }else{
                             Log.e("Custom Error","Map was null");
                         }
