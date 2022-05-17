@@ -222,8 +222,8 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
             @Override
             public void run() {
                 DbSummary sum = new DbSummary();
-                ArrayList<Integer> s = sum.getSummaryFromDB(MainActivity.this);
-                for (Integer i : s){
+                ArrayList<Float> s = sum.getSummaryFromDB(MainActivity.this);
+                for (Float i : s){
                     Log.i("Summary","--" + i);
                 }
                 Log.i("Summary",s.toString());
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         }).start();
     }
 
-    private void drawGraph(ArrayList<Integer> s){
+    private void drawGraph(ArrayList<Float> s){
         chart = findViewById(R.id.weeklyChart);
         chart.setExtraTopOffset(-30f);
         chart.setExtraBottomOffset(10f);
@@ -262,11 +262,11 @@ public class MainActivity extends AppCompatActivity implements OnChartValueSelec
         xAxis.setTextSize(13f);
         xAxis.setLabelCount(5);
         xAxis.setEnabled(false);
-        xAxis.setCenterAxisLabels(true);
+        xAxis.setCenterAxisLabels(false);
         xAxis.setGranularity(1f);
-
         YAxis left = chart.getAxisLeft();
-        left.setDrawLabels(false);
+        left.setAxisMaximum(UserData.getAdvisedActivity()*2);
+        left.setDrawLabels(true);
         LimitLine limitLine = new LimitLine(UserData.getAdvisedActivity());
         limitLine.enableDashedLine(20f,20f,1);
         left.addLimitLine(limitLine);
