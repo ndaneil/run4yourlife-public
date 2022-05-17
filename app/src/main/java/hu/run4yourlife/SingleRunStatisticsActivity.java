@@ -120,9 +120,10 @@ public class SingleRunStatisticsActivity extends AppCompatActivity {
                         ArrayList<Float> distVals=new ArrayList<>();
                         ArrayList<Entry> topData=new ArrayList<Entry>();
                         ArrayList<Entry> bottomData=new ArrayList<Entry>();
-
+                        float sum=0;
                         for( Double i :(sp.CalcAllDistance(currentRun.getGpsdata()))){
-                            distVals.add(i.floatValue());
+                            sum+=i.floatValue();
+                            distVals.add(sum);
                         }
 
 
