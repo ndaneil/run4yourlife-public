@@ -2,6 +2,9 @@ package hu.run4yourlife.interfaces;
 
 import java.util.ArrayList;
 
+/**
+ *  Kinga + Matyi
+ */
 public class Challenge {
     private String ChallengeName;
     private ArrayList<String> Stops; //megallok

@@ -36,6 +36,9 @@ import hu.run4yourlife.interfaces.Challenges;
 import hu.run4yourlife.interfaces.Speedtrap;
 import hu.run4yourlife.interfaces.StaticStuff;
 
+/**
+ * Dani
+ */
 public class RunningService extends Service {
 
     public static final String ACTION_START = "START";
@@ -67,6 +70,8 @@ public class RunningService extends Service {
             this.accu = accu;
             this.timestamp = timestamp;
         }
+
+        public Double getAltitude() {return alt;}
     }
 
     ArrayList<GPSCoordinate> runHistory = new ArrayList<>();
@@ -139,6 +144,7 @@ public class RunningService extends Service {
         listener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                Log.i("RunningService","OnLocationChanged....");
                 double lat = location.getLatitude();
                 double lon = location.getLongitude();
                 double alt = location.getAltitude();
@@ -154,17 +160,17 @@ public class RunningService extends Service {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-
+                Log.i("RunningService","OnStatusChanged....");
             }
 
             @Override
             public void onProviderEnabled(String provider) {
-
+                Log.i("RunningService","OnProviderEnabled....");
             }
 
             @Override
             public void onProviderDisabled(String provider) {
-
+                Log.i("RunningService","OnProviderDisabled....");
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -177,7 +183,7 @@ public class RunningService extends Service {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates("gps", 2000, 0, listener);//TODO change back...
+        locationManager.requestLocationUpdates("gps", StaticStuff.LOCATION_DELAY_MILLIS, StaticStuff.LOCATION_DELAY_METERS, listener);
 
     }
 
@@ -187,14 +193,17 @@ public class RunningService extends Service {
         stopSelf();
     }
     private void saveDataToDB(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RunningDatabase db = Room.databaseBuilder(getApplicationContext(), RunningDatabase.class, StaticStuff.RUNDB_NAME).build();
-                RunhistoryDB newRun = new RunhistoryDB(TRACKING_ID_MS,System.currentTimeMillis()/1000L,runHistory);
-                db.myDataBase().insertRun(newRun);
-            }
-        }).start();
+        if (totalDistance != 0) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    RunningDatabase db = Room.databaseBuilder(getApplicationContext(), RunningDatabase.class, StaticStuff.RUNDB_NAME).build();
+                    RunhistoryDB newRun = new RunhistoryDB(challengeID, TRACKING_ID_MS, System.currentTimeMillis() / 1000L, runHistory);
+                    db.myDataBase().insertRun(newRun);
+                    db.close();
+                }
+            }).start();
+        }
     }
 
     @Nullable

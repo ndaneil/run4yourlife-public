@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/item_challenge_view"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    >
     <TextView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="Challenge name"
+        android:background="@color/invis"
         android:textSize="25sp"
         android:layout_margin="10dp"
         android:id="@+id/item_challenge_name"/>
@@ -16,10 +17,11 @@
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/invis"
         android:textSize="25sp"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:text="100km"
+        android:text=""
         android:id="@+id/item_challenge_distance"/>
 
 </LinearLayout>

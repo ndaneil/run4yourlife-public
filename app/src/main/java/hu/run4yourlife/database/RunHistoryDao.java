@@ -7,6 +7,9 @@ import androidx.room.Query;
 
 import java.util.List;
 
+/**
+ * Dani
+ */
 @Dao
 public interface RunHistoryDao {
     @Insert

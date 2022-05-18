@@ -20,6 +20,9 @@ import java.net.URL;
 import java.sql.Time;
 import java.util.ArrayList;
 
+/**
+ * Dani , getBestTime: Kinga+Matyi
+ */
 public class RecommendedTime {
 
     private Context ctx;
@@ -139,7 +142,7 @@ public class RecommendedTime {
         int i = 0;
         for ( QualityData qd : qualities) {
             int ourtime = new java.util.Date((long)qd.timeIndex*1000).getHours();
-            Log.i("OUR","OT:" + ourtime);
+            //Log.i("OUR","OT:" + ourtime);
             if (ourtime >= hourMin && ourtime <= hourMax && i <24) {
                 min = qd.airQualityIndex + qd.uvi/2f+ourtime/48f;
                 min_qd = qd;

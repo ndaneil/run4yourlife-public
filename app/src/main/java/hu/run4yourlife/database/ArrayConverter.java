@@ -10,7 +10,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import hu.run4yourlife.RunningService;
-
+/**
+ * Dani
+ * */
 public class ArrayConverter implements Serializable {
     @TypeConverter // note this annotation
     public String fromOptionValuesList(ArrayList<RunningService.GPSCoordinate> optionValues) {
@@ -20,8 +22,7 @@ public class ArrayConverter implements Serializable {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<RunningService.GPSCoordinate>>() {
         }.getType();
-        String json = gson.toJson(optionValues, type);
-        return json;
+        return gson.toJson(optionValues, type);
     }
 
     @TypeConverter // note this annotation
@@ -32,7 +33,6 @@ public class ArrayConverter implements Serializable {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<RunningService.GPSCoordinate>>() {
         }.getType();
-        ArrayList<RunningService.GPSCoordinate> productCategoriesList = gson.fromJson(optionValuesString, type);
-        return productCategoriesList;
+        return gson.fromJson(optionValuesString, type);
     }
 }

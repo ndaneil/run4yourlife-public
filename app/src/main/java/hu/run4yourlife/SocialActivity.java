@@ -3,7 +3,7 @@ package hu.run4yourlife;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-
+// TODO
 public class SocialActivity extends AppCompatActivity {
 
     @Override

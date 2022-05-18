@@ -2,6 +2,9 @@ package hu.run4yourlife.interfaces;
 
 import androidx.annotation.NonNull;
 
+/**
+ * Dani
+ */
 public class QualityData {
     public double currentTemp;
     public double currentHumidity;

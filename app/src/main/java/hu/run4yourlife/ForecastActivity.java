@@ -1,25 +1,24 @@
 package hu.run4yourlife;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 
-import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
+
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
@@ -32,15 +31,18 @@ import hu.run4yourlife.interfaces.QualityData;
 import hu.run4yourlife.interfaces.RecommendedTime;
 import hu.run4yourlife.interfaces.StaticStuff;
 
+/***
+ *  90% L+ Ferkó
+ */
 public class ForecastActivity extends AppCompatActivity implements OnChartValueSelectedListener {
 
     ImageView weatherImage;
     TextView currentTemp;
     BarChart forecastBarchart;
-    ScrollView detailedForecast;
     ArrayList<RecommendedTime.TimeData> forecastData;
     //RecommendedTime RT;
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +94,6 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
                     QualityData nowData = StaticStuff.recommendedTime.getCurrent();
                     setData(forecastData);
 
-
                     int picturename= R.drawable.sunny;
                     int id = nowData.weatherID;
                     if (id>=200 && id<300){
@@ -123,23 +124,23 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            currentTemp.setText(nowData.currentTemp + " °C");
+                            currentTemp.setText(String.format("%s °C", nowData.currentTemp));
                             weatherImage.setImageResource(finalPicturename);
                             weatherImage.setVisibility(View.VISIBLE);
                         }
                     });
     }
     private void setData(ArrayList<RecommendedTime.TimeData> dataList) {
-        int currentHour = dataList.get(0).hourtime;
+        //int currentHour = dataList.get(0).hourtime;
         ArrayList<BarEntry> values = new ArrayList<>();
         ArrayList<Integer> colors = new ArrayList<>();
         ArrayList<String> xValues = new ArrayList<>();
 
 
 
-        int green = Color.rgb(110, 190, 102);
-        int yellow = Color.rgb(240,220,0);
-        int red = Color.rgb(211, 74, 88);
+        int green = getColor(R.color.primaryColor);
+        int yellow = getColor(R.color.orange);
+        int red = getColor(R.color.red);
 
         for (int i = 0; i < dataList.size(); i++) {
 
@@ -149,9 +150,9 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
             xValues.add(dataList.get(i).getHourString());
 
             // specific colors
-            if (d.quality >= 4)
+            if (d.quality >= StaticStuff.RED_ZONE)
                 colors.add(red);
-            else if(d.quality>=2.5)
+            else if(d.quality>=StaticStuff.ORANGE_ZONE)
                 colors.add(yellow);
             else
                 colors.add(green);
@@ -183,7 +184,9 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
             xAxis.setAvoidFirstLastClipping(false);
             xAxis.setValueFormatter(new IndexAxisValueFormatter(xValues) {
             });
-            xAxis.setTextColor(Color.WHITE);
+            xAxis.setTextColor(ContextCompat.getColor(this,R.color.secondaryDarkColor));
+
+
             forecastBarchart.zoom(2,1,0,0);
             forecastBarchart.getAxisLeft().setDrawLabels(false);
             forecastBarchart.getAxisRight().setDrawLabels(false);
@@ -191,6 +194,7 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
             forecastBarchart.getDescription().setEnabled(false);
             forecastBarchart.getLegend().setEnabled(false);
             forecastBarchart.setOnChartValueSelectedListener(this);
+
             forecastBarchart.setData(data);
             forecastBarchart.invalidate();
         }
@@ -214,6 +218,7 @@ public class ForecastActivity extends AppCompatActivity implements OnChartValueS
      */
     @Override
     public void onNothingSelected() {
-
+        TextView scroller = findViewById(R.id.scrollerText);
+        scroller.setText("");
     }
 }

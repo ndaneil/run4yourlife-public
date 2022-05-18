@@ -1,9 +1,14 @@
 package hu.run4yourlife.interfaces;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import hu.run4yourlife.RunningService;
 
+/**
+ * Kinga + Matyi;  Levi
+ */
 public class Speedtrap {
     private static final double r = 6378100;
     private static final double pi = 3.14159265359;
@@ -32,6 +37,24 @@ public class Speedtrap {
         double xy = theta * r;
         double ret = Math.sqrt(xy*xy+(alt2-alt1)*(alt2-alt1))/1000.0;
         return Double.isNaN(ret)?0.0:ret;
+    }
+
+    /**
+     * @param coords input coordinate array
+     * @return array of size input with distance data plus distance sum as last element
+     */
+    public ArrayList<Double> CalcAllDistance(ArrayList<RunningService.GPSCoordinate> coords){
+        ArrayList<Double> allDist = new ArrayList<>();
+        double sum=0;
+        for( int i=0;i<coords.size()-1;i++){
+            double temp=calcDist(coords.get(i),coords.get(i+1));
+            allDist.add(temp);
+            sum+=temp;
+            //Log.i("distance",allDist.get(allDist.size()-1).toString());
+        }
+        allDist.add(sum);
+        //Log.i("distance",allDist.get(allDist.size()-1).toString());
+        return allDist;
     }
 
     private double calcTimeDiff(RunningService.GPSCoordinate a, RunningService.GPSCoordinate b) {

@@ -5,6 +5,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
+/**
+ * Dani + Ferkó (xml)
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
